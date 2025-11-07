@@ -1,666 +1,200 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Alicia — Libro Interactivo (Capítulos)</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Library </title>
 
-  <!-- Bootstrap 5 -->
+  <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <!-- Fuentes -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --beige:#F7F1DE;
-      --sand:#C4A484;
-      --terra:#B87C4C;
-      --text:#3b2f2b;
-    }
-    *{box-sizing:border-box}
-    body{
-      background: linear-gradient(180deg, #FBF8F4 0%, var(--beige) 100%);
-      color:var(--text);
-      font-family:'Poppins',sans-serif;
-      -webkit-font-smoothing:antialiased;
-      margin:0;
+    :root {
+      --beige: #F7F1DE;
+      --sand: #C4A484;
+      --brown: #B87C4C;
     }
 
-    /* NAV */
-    .navbar{
-      background: linear-gradient(90deg, rgba(184,124,76,0.95), rgba(184,124,76,0.9));
-      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    body {
+      background-color: var(--beige);
+      color: #3c2f2f;
+      font-family: 'Poppins', sans-serif;
     }
-    .brand-title{
-      font-family:'Playfair Display',serif;
-      font-weight:700;
-      color:var(--beige);
-      font-size:1.15rem;
-    }
-    .nav-link { color: rgba(247,241,222,0.95) !important; }
-    .nav-link:hover{ color: #fff !important; text-decoration: underline; }
 
-    /* SHELL */
-    .book-shell{
-      max-width:1180px;
-      margin:26px auto;
-      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.98));
-      border-radius:14px;
-      box-shadow: 0 10px 30px rgba(25,20,15,0.06);
+    /* Navbar */
+    .navbar {
+      background-color: var(--brown);
+    }
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--beige) !important;
+    }
+    .nav-link {
+      color: var(--beige) !important;
+      margin-right: 15px;
+    }
+    .nav-link:hover {
+      color: #fff8ee !important;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(184, 124, 76, 0.6), rgba(184, 124, 76, 0.6)),
+                  url('https://images.unsplash.com/photo-1512820790803-83ca734da794') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 120px 20px;
+      border-bottom: 5px solid var(--sand);
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      margin-top: 15px;
+    }
+
+    /* Book Cards */
+    .book-card {
+      border: none;
+      border-radius: 15px;
       overflow: hidden;
-      border: 6px solid rgba(196,164,132,0.12);
-      padding-bottom:12px;
+      transition: transform 0.3s;
+      background-color: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .book-card:hover {
+      transform: translateY(-5px);
+    }
+    .book-card img {
+      height: 250px;
+      object-fit: cover;
+    }
+    .card-body {
+      background-color: var(--beige);
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      color: var(--brown);
+    }
+    .btn-read {
+      background-color: var(--brown);
+      color: var(--beige);
+      border: none;
+      transition: 0.3s;
+    }
+    .btn-read:hover {
+      background-color: var(--sand);
+      color: #fff;
     }
 
-    .book-header{
-      background:var(--beige);
-      padding:14px 22px;
-      display:flex;
-      gap:14px;
-      align-items:center;
-      border-bottom:4px solid var(--sand);
+    /* Footer */
+    footer {
+      background-color: var(--brown);
+      color: var(--beige);
+      padding: 30px 0;
+      text-align: center;
     }
-    .book-cover{
-      width:100px;
-      height:130px;
-      border-radius:8px;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
-      background: linear-gradient(180deg, #fff 0%, var(--sand) 100%);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-family:'Playfair Display',serif;
-      color:var(--terra);
-      font-size:14px;
-      padding:8px;
-      text-align:center;
+    footer a {
+      color: var(--beige);
+      margin: 0 10px;
+      font-size: 1.3rem;
     }
-
-    .book-meta h2{ font-family:'Playfair Display',serif; margin:0; color:var(--terra); }
-    .book-meta p{ margin:0; color:#6a584f; }
-
-    .reader{
-      display:flex;
-      gap:20px;
-      padding:18px;
-      flex-wrap:wrap;
-      align-items:flex-start;
-    }
-
-    .page{
-      flex:1 1 640px;
-      min-height:480px;
-      background: linear-gradient(180deg, rgba(247,241,222,0.6), #fff);
-      border-radius:10px;
-      padding:20px;
-      position:relative;
-    }
-    .sidebar{
-      width:300px;
-      flex:0 0 300px;
-    }
-
-    .chapter-title{
-      font-family:'Playfair Display',serif;
-      color:var(--terra);
-      margin-bottom:12px;
-      font-size:1.45rem;
-    }
-    .chapter-text{
-      line-height:1.7;
-      color:var(--text);
-      font-size:1rem;
-      white-space:pre-wrap;
-    }
-
-    .inline-note{
-      display:inline-block;
-      background:var(--sand);
-      color:#2e231f;
-      padding:4px 8px;
-      border-radius:7px;
-      margin-left:8px;
-      font-size:0.85rem;
-      cursor:pointer;
-      border: 1px solid rgba(0,0,0,0.03);
-    }
-
-    .controls{ display:flex; gap:10px; margin-top:16px; align-items:center; flex-wrap:wrap; }
-    .btn-plain{ border-radius:10px; border: 1px solid rgba(60,40,30,0.06); background:transparent; color:var(--terra); padding:8px 12px; font-weight:600; }
-
-    .card-side{ background:linear-gradient(180deg, var(--beige), #fff); border-radius:10px; padding:14px; margin-bottom:12px; box-shadow: 0 6px 18px rgba(0,0,0,0.04); border:1px solid rgba(196,164,132,0.08); }
-    .card-side h5{ margin:0 0 8px 0; color:var(--terra); font-family:'Playfair Display',serif; }
-
-    footer.site-foot{ text-align:center; padding:14px; color:#6a584f; font-size:0.95rem; }
-
-    .stamp{ position:absolute; right:16px; top:16px; background:var(--terra); color:var(--beige); padding:6px 10px; border-radius:8px; font-size:0.85rem; box-shadow: 0 6px 10px rgba(184,124,76,0.12); }
-
-    @media (max-width:992px){
-      .sidebar{ flex-basis:100%; width:100%; }
-      .page{ flex-basis:100%; }
-      .book-shell{ margin: 12px; }
+    footer a:hover {
+      color: #fff8ee;
     }
   </style>
 </head>
 <body>
+
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <span class="brand-title"><i class="fa-solid fa-moon"></i> Biblioteca Interactiva</span>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-        <span class="navbar-toggler-icon"><i class="fa-solid fa-bars" style="color:rgba(247,241,222,0.95)"></i></span>
+      <a class="navbar-brand" href="#"><i class="fa-solid fa-book-open"></i> Rustic Tales</a>
+      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span><i class="fa-solid fa-bars"></i></span>
       </button>
-      <div class="collapse navbar-collapse" id="navMenu">
+      <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Capítulos</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Minijuegos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Stories</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <div class="book-shell">
-    <div class="book-header">
-      <div class="book-cover">ALICIA<br>EN EL PAÍS<br>DE LAS MARAVILLAS</div>
-      <div class="book-meta">
-        <h2>Alicia — Edición Interactiva</h2>
-        <p>Texto original en inglés (dominio público) — interfaz en español. Capítulos navegables, datos y minijuegos.</p>
-        <div style="margin-top:8px;">
-          <span class="badge" style="background:var(--sand); color:#2e231f;">Rústico · Moderno</span>
-          <span class="badge" style="background:var(--terra); color:var(--beige); margin-left:8px;">Familiar</span>
-        </div>
-      </div>
-      <div class="ms-auto" style="text-align:right;">
-        <small style="color:#6a584f">Progreso</small>
-        <div class="progress" style="height:10px; width:220px; margin-top:6px;">
-          <div id="progressBar" class="progress-bar" role="progressbar" style="width:0%; background:linear-gradient(90deg,var(--terra),var(--sand));"></div>
-        </div>
-        <small id="chapterIndicator" style="display:block; margin-top:6px; color:#6a584f">Capítulo 1 / 12</small>
-      </div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Welcome to Rustic Tales</h1>
+      <p>Discover a world of interactive stories that grow with every choice you make.</p>
+      <a href="#" class="btn btn-read mt-3"><i class="fa-solid fa-book"></i> Start Reading</a>
     </div>
+  </section>
 
-    <div class="reader">
-      <div class="page" id="page">
-        <div class="stamp"><i class="fa-solid fa-bolt"></i> Lectura</div>
-
-        <div class="chapter">
-          <div class="chapter-title" id="chapterTitle">Capítulo 1 — Down the Rabbit-Hole</div>
-          <div class="chapter-text" id="chapterText">
-            <!-- CAPÍTULO 1: texto en inglés (dominio público) -->
-            <p>
-Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, “and what is the use of a book,” thought Alice “without pictures or conversations?”
-            </p>
-
-            <p>
-So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.
-            </p>
-
-            <p>
-There was nothing so very remarkable in that; nor did Alice think it so very much out of the way to hear the Rabbit say to itself,
-“ Oh dear! Oh dear! I shall be late! ”
-(when she thought it over afterwards, it occurred to her that she ought to have wondered at this, but at the time it all seemed quite natural); but when the Rabbit actually took a watch out of its waistcoat-pocket, and looked at it, and then hurried on, Alice started to her feet, for it flashed across her mind that she had never before seen a rabbit with either a waistcoat-pocket, or a watch to take out of it, and burning with curiosity, she ran across the field after it, and fortunately was just in time to see it pop down a large rabbit-hole under the hedge.
-            </p>
-
-            <p>
-<!-- Más párrafos del capítulo 1 -->
-            </p>
-
-            <p style="margin-top:12px;">
-<span class="inline-note" data-note="Dato: Lewis Carroll era en realidad Charles L. Dodgson, matemático y fotógrafo.">ⓘ Sobre el autor</span>
-<span class="inline-note" data-note="Curiosidad: la primera edición es de 1865 y está en dominio público.">ⓘ Sobre la obra</span>
-            </p>
-
-            <!-- Minijuego sugerido: al caer por la madriguera — quiz corto -->
-            <div style="margin-top:18px; padding:12px; border-radius:8px; background:linear-gradient(90deg, rgba(196,164,132,0.06), rgba(184,124,76,0.03));">
-              <strong>Minijuego:</strong> Quiz rápido sobre el capítulo (haz clic).
-              <div style="margin-top:8px;">
-                <button id="openQuiz" class="btn" style="background:var(--terra); color:var(--beige);">Abrir Quiz</button>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="controls">
-            <button class="btn btn-plain" id="prevBtn"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
-            <button class="btn btn-plain" id="nextBtn">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
-            <button class="btn btn-plain" id="toggleNotes"><i class="fa-solid fa-eye"></i> Mostrar/ocultar datos</button>
-
-            <div class="ms-auto">
-              <button class="btn btn-sm" style="background:var(--sand); color:#2e231f; margin-left:8px;" id="openMemory"><i class="fa-solid fa-clone"></i> Memoria</button>
-              <button class="btn btn-sm" style="background:var(--terra); color:var(--beige); margin-left:8px;" id="readAloud">🔊 Leer en voz alta</button>
+  <!-- Book Section -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4" style="color: var(--brown); font-family: 'Playfair Display', serif;">Popular Interactive Stories</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card book-card">
+            <img src="https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d" class="card-img-top" alt="Book 1">
+            <div class="card-body text-center">
+              <h5 class="card-title">The Forest of Whispers</h5>
+              <p class="card-text">A magical forest full of talking creatures and hidden paths. Your choices shape the legend.</p>
+              <a href="#" class="btn btn-read"><i class="fa-solid fa-play"></i> Read Now</a>
             </div>
           </div>
-
-        </div>
-      </div>
-
-      <aside class="sidebar">
-        <div class="card-side" id="factsCard">
-          <h5>Datos interesantes</h5>
-          <ul id="factsList" style="padding-left:18px; margin-bottom:0; color:#4a3b35;">
-            <!-- se llena dinámicamente -->
-          </ul>
         </div>
 
-        <div class="card-side">
-          <h5>Resumen</h5>
-          <p id="summary" style="margin:0; color:#4a3b35;">Resumen del capítulo actual.</p>
-        </div>
-
-        <div class="card-side">
-          <h5>Capítulos</h5>
-          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
-            <button class="btn btn-sm btn-plain" onclick="goToChapter(1)">Cap 1</button>
-            <button class="btn btn-sm btn-plain" onclick="goToChapter(2)">Cap 2</button>
-            <button class="btn btn-sm btn-plain" onclick="goToChapter(3)">Cap 3</button>
-            <button class="btn btn-sm btn-plain" onclick="goToChapter(4)">Cap 4</button>
-            <button class="btn btn-sm btn-plain" onclick="goToChapter(5)">Cap 5</button>
-            <button class="btn btn-sm btn-plain" onclick="goToChapter(6)">Cap 6</button>
-            <button class="btn btn-sm btn-plain" onclick="goToChapter(7)">Cap 7</button>
-            <button class="btn btn-sm btn-plain" onclick="goToChapter(8)">Cap 8</button>
-            <button class="btn btn-sm btn-plain" onclick="goToChapter(9)">Cap 9</button>
-            <button class="btn btn-sm btn-plain" onclick="goToChapter(10)">Cap 10</button>
-            <button class="btn btn-sm btn-plain" onclick="goToChapter(11)">Cap 11</button>
-            <button class="btn btn-sm btn-plain" onclick="goToChapter(12)">Cap 12</button>
+        <div class="col-md-4">
+          <div class="card book-card">
+            <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66" class="card-img-top" alt="Book 2">
+            <div class="card-body text-center">
+              <h5 class="card-title">Chronicles of Ember</h5>
+              <p class="card-text">Embark on a journey through ancient kingdoms and fire-lit stories of courage.</p>
+              <a href="#" class="btn btn-read"><i class="fa-solid fa-play"></i> Read Now</a>
+            </div>
           </div>
         </div>
 
-        <div class="card-side">
-          <h5>Notas</h5>
-          <p style="margin:0; color:#4a3b35; font-size:0.95rem;">
-            Puedes pedir que inserte los capítulos restantes completos en el mismo archivo. Aviso: el archivo se hará muy grande.
-          </p>
-        </div>
-      </aside>
-    </div>
-
-    <footer class="site-foot">
-      <small>Texto de dominio público (Project Gutenberg). Interfaz y añadidos desarrollados para este demo.</small>
-    </footer>
-  </div>
-
-  <!-- QUIZ MODAL -->
-  <div class="modal fade" id="quizModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header" style="background:var(--sand);">
-          <h5 class="modal-title" style="color:#2e231f;"><i class="fa-solid fa-question"></i> Quiz — Capítulo</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <div id="quizContainer"></div>
-          <div id="quizFeedback" style="margin-top:12px;"></div>
-        </div>
-        <div class="modal-footer">
-          <button id="quizNext" class="btn btn-plain">Siguiente</button>
-          <button class="btn" data-bs-dismiss="modal" style="background:var(--terra); color:var(--beige);">Cerrar</button>
+        <div class="col-md-4">
+          <div class="card book-card">
+            <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f" class="card-img-top" alt="Book 3">
+            <div class="card-body text-center">
+              <h5 class="card-title">Mystery of the Lost Library</h5>
+              <p class="card-text">Solve riddles and discover the secret that lies within the forgotten pages.</p>
+              <a href="#" class="btn btn-read"><i class="fa-solid fa-play"></i> Read Now</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- MEMORY MODAL -->
-  <div class="modal fade" id="memoryModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header" style="background:var(--terra); color:var(--beige);">
-          <h5 class="modal-title"><i class="fa-solid fa-clone"></i> Juego de Memoria</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <p id="memoryIntro">Encuentra los pares relacionados con Alicia.</p>
-          <div id="memoryBoard" class="d-grid" style="grid-template-columns:repeat(4,1fr); gap:12px;"></div>
-          <div id="memoryMsg" style="margin-top:12px;"></div>
-        </div>
-        <div class="modal-footer">
-          <button id="resetMemory" class="btn btn-plain">Reiniciar</button>
-          <button class="btn" data-bs-dismiss="modal" style="background:var(--sand); color:#2e231f;">Terminar</button>
-        </div>
-      </div>
+  <!-- Footer -->
+  <footer>
+    <p><i class="fa-regular fa-copyright"></i> 2025 Rustic Tales Library</p>
+    <div>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
     </div>
-  </div>
+  </footer>
 
-  <!-- SCRIPTS -->
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    /*******************************
-     * Capítulos (ejemplo): los 3 primeros capítulos completos
-     * El texto proviene del original en dominio público (Project Gutenberg).
-     * Puedes pedirme que inserte todos los capítulos en este mismo archivo.
-     *******************************/
-    const chapters = [
-      {
-        title: "Capítulo 1 — Down the Rabbit-Hole",
-        // Texto en inglés (dominio público). Aquí se ha incluido solo el inicio; puedes pedirme que inserte todo el capítulo.
-        text: `Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, "and what is the use of a book," thought Alice "without pictures or conversations?"
-
-So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.
-
-There was nothing so very remarkable in that; nor did Alice think it so very much out of the way to hear the Rabbit say to itself, "Oh dear! Oh dear! I shall be late!" (when she thought it over afterwards, it occurred to her that she ought to have wondered at this, but at the time it all seemed quite natural); but when the Rabbit actually took a watch out of its waistcoat-pocket, and looked at it, and then hurried on, Alice started to her feet, for it flashed across her mind that she had never before seen a rabbit with either a waistcoat-pocket, or a watch to take out of it, and burning with curiosity, she ran across the field after it, and fortunately was just in time to see it pop down a large rabbit-hole under the hedge.
-
-In another moment down went Alice after it, never once considering how in the world she was to get out again.
-
-[... capítulo continúa — puedo insertar el capítulo completo si lo deseas ...]`,
-        summary: "Alicia sigue a un conejo y cae por una madriguera; comienza su aventura.",
-        facts: [
-          "Lewis Carroll es Charles L. Dodgson, matemático y escritor.",
-          "El libro fue publicado por primera vez en 1865 y está en dominio público."
-        ],
-        quiz: [
-          { q:"¿A quién sigue Alicia al principio?", options:["El gato Cheshire","Un Sombrerero","Un Conejo Blanco","La Reina"], a:2 }
-        ],
-        memoryPairs: ["Alicia","Conejo","Sombrerero","Té","Gato","Sonrisa"]
-      },
-
-      {
-        title: "Capítulo 2 — The Pool of Tears",
-        text: `Alice soon began to get very tired of sitting by her sister on the bank, and of having nothing to do...
-
-[Texto del capítulo 2: en la versión final puedo pegarlo completo desde Project Gutenberg.]`,
-        summary: "Alicia crece y encoge, y se forman lágrimas que se transforman en un lago.",
-        facts: ["El motivo del tamaño (crecer/encoger) simboliza cambios de la niñez."],
-        quiz: [
-          { q:"¿Qué se forma cuando Alicia llora mucho?", options:["Un pozo","Un lago de lágrimas","Un río","Una fuente"], a:1 }
-        ],
-        memoryPairs: ["Lago","Lágrimas","Ratoncito","Pato"]
-      },
-
-      {
-        title: "Capítulo 3 — A Caucus-Race and a Long Tale",
-        text: `They were indeed a queer-looking party that assembled on the bank—the birds with draggled feathers, the animals with shabby coats, and all with sad anxious faces.
-
-[Texto del capítulo 3: puedo insertar el capítulo entero a pedido.]`,
-        summary: "Una carrera absurda para secar a los participantes; Carroll juega con la lógica.",
-        facts: ["La 'caucus-race' es un juego absurdo que parodia reuniones políticas."],
-        quiz: [
-          { q:"¿Cuál es el propósito de la 'caucus-race' en la historia?", options:["Limpiar a los personajes","Dar premios","Hacer reír","Secar a los participantes"], a:3 }
-        ],
-        memoryPairs: ["Pato","Lora","Dodo","Carrera"]
-      },
-
-      // Para mantener el archivo manejable he dejado marcadores para capítulos 4..12.
-      // Si confirmas, inserto el texto completo de los capítulos 4 a 12 y actualizo el array.
-      {
-        title: "Capítulo 4 — The Rabbit Sends in a Little Bill",
-        text: "[Marcador: texto completo del capítulo 4 — pídeme insertar todo cuando quieras]",
-        summary: "Alicia entra en la casa del conejo y hay situaciones divertidas.",
-        facts: ["Capítulo con situaciones cómicas y cambios de tamaño."],
-        quiz: [{ q:"¿Dónde entra Alicia en este capítulo?", options:["En una tienda","En la casa del Conejo","En el castillo","En la escuela"], a:1 }],
-        memoryPairs: []
-      },
-      {
-        title: "Capítulo 5 — Advice from a Caterpillar",
-        text: "[Marcador: texto completo del capítulo 5]",
-        summary: "La oruga le da consejos sobre tamaño y identidad.",
-        facts: ["La oruga es un personaje que cuestiona la identidad de Alicia."],
-        quiz: [{ q:"¿Qué insecto aconseja a Alicia?", options:["Una oruga","Una mariposa","Un escarabajo","Un gusano"], a:0 }],
-        memoryPairs: []
-      },
-      {
-        title: "Capítulo 6 — Pig and Pepper",
-        text: "[Marcador: texto completo del capítulo 6]",
-        summary: "Alicia visita la casa de la duquesa; escenas absurdas.",
-        facts: [],
-        quiz: [],
-        memoryPairs: []
-      },
-      {
-        title: "Capítulo 7 — A Mad Tea-Party",
-        text: "[Marcador: texto completo del capítulo 7]",
-        summary: "El té interminable con el Sombrerero y la Liebre de Marzo.",
-        facts: ["Escena famosa por su absurdo y juegos de palabra."],
-        quiz: [{ q:"¿Quiénes están en la mesa del té?", options:["La Reina y el Rey","El Sombrerero y la Liebre de Marzo","El Conejo y el Gato","Solo Alicia"], a:1 }],
-        memoryPairs: ["Taza","Sombrerero","Liebre","Té"]
-      },
-      {
-        title: "Capítulo 8 — The Queen's Croquet-Ground",
-        text: "[Marcador: texto completo del capítulo 8]",
-        summary: "La Reina de Corazones y el croquet con flamencos.",
-        facts: [],
-        quiz: [],
-        memoryPairs: []
-      },
-      {
-        title: "Capítulo 9 — The Mock Turtle's Story",
-        text: "[Marcador: texto completo del capítulo 9]",
-        summary: "La historia del Tortuga Falsa y bailes absurdos.",
-        facts: [],
-        quiz: [],
-        memoryPairs: []
-      },
-      {
-        title: "Capítulo 10 — The Lobster Quadrille",
-        text: "[Marcador: texto completo del capítulo 10]",
-        summary: "Canción y baile; más absurdo.",
-        facts: [],
-        quiz: [],
-        memoryPairs: []
-      },
-      {
-        title: "Capítulo 11 — Who Stole the Tarts?",
-        text: "[Marcador: texto completo del capítulo 11]",
-        summary: "Acusaciones y el juicio por las tartas robadas.",
-        facts: [],
-        quiz: [],
-        memoryPairs: []
-      },
-      {
-        title: "Capítulo 12 — Alice's Evidence",
-        text: "[Marcador: texto completo del capítulo 12]",
-        summary: "Cierre del juicio y regreso al mundo real.",
-        facts: [],
-        quiz: [],
-        memoryPairs: []
-      }
-    ];
-
-    let current = 0;
-    const total = chapters.length;
-
-    // DOM refs
-    const chapterTitle = document.getElementById('chapterTitle');
-    const chapterText = document.getElementById('chapterText');
-    const factsList = document.getElementById('factsList');
-    const summaryEl = document.getElementById('summary');
-    const progressBar = document.getElementById('progressBar');
-    const chapterIndicator = document.getElementById('chapterIndicator');
-
-    function renderChapter(i){
-      const ch = chapters[i];
-      chapterTitle.textContent = ch.title;
-      chapterText.innerHTML = formatText(ch.text) + generateInlineNotes(ch);
-      factsList.innerHTML = '';
-      (ch.facts || []).forEach(f=>{
-        const li = document.createElement('li'); li.textContent = f; factsList.appendChild(li);
-      });
-      summaryEl.textContent = ch.summary || '';
-      const pct = Math.round(((i+1)/total)*100);
-      progressBar.style.width = pct + '%';
-      chapterIndicator.textContent = `Capítulo ${i+1} / ${total}`;
-
-      // bind inline-note clicks
-      document.querySelectorAll('.inline-note').forEach(el=>{
-        el.onclick = () => { showNote(el.getAttribute('data-note')); };
-      });
-    }
-
-    function formatText(txt){
-      // Si el texto incluye el marcador [...] lo dejamos visible; sustituye saltos de línea por <p>
-      // También convertimos pequeños marcadores para minijuegos si detectamos la palabra 'Minijuego'
-      return txt.split('\\n\\n').map(p => `<p>${escapeHTML(p)}</p>`).join('');
-    }
-    function escapeHTML(s){
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
-
-    function generateInlineNotes(ch){
-      if(!ch.facts || ch.facts.length===0) return '';
-      return '<div style="margin-top:12px;"><span class="inline-note" onclick="showFacts()">🔎 Ver datos del capítulo</span></div>';
-    }
-
-    function showNote(text){
-      const modalContent = text || 'Dato';
-      alert(modalContent);
-    }
-    function showFacts(){
-      const facts = chapters[current].facts || [];
-      if(facts.length===0) { alert('No hay datos para este capítulo.'); return; }
-      alert('Datos:\\n\\n' + facts.join('\\n- '));
-    }
-
-    // navigation
-    document.getElementById('prevBtn').addEventListener('click', ()=>{
-      if(current>0){ current--; renderChapter(current); }
-    });
-    document.getElementById('nextBtn').addEventListener('click', ()=>{
-      if(current<total-1){ current++; renderChapter(current); }
-    });
-
-    function goToChapter(n){
-      if(n<1||n>total) return;
-      current = n-1; renderChapter(current);
-    }
-
-    document.getElementById('toggleNotes').addEventListener('click', ()=>{
-      document.getElementById('factsCard').classList.toggle('d-none');
-    });
-
-    // INITIAL RENDER
-    renderChapter(current);
-
-    /*******************************
-     * QUIZ: simple secuencia por capítulo
-     *******************************/
-    const quizModal = new bootstrap.Modal(document.getElementById('quizModal'));
-    let quizIndex = 0;
-    let currentQuizSet = chapters[0].quiz || [];
-    const quizContainer = document.getElementById('quizContainer');
-    const quizFeedback = document.getElementById('quizFeedback');
-    const quizNextBtn = document.getElementById('quizNext');
-
-    document.getElementById('openQuiz').addEventListener('click', ()=>{
-      currentQuizSet = chapters[current].quiz || [];
-      if(currentQuizSet.length===0){
-        alert('No hay preguntas para este capítulo.');
-        return;
-      }
-      quizIndex = 0;
-      showQuizQuestion();
-      quizModal.show();
-    });
-
-    function showQuizQuestion(){
-      const q = currentQuizSet[quizIndex];
-      if(!q){ quizContainer.innerHTML = '<p>No hay más preguntas.</p>'; quizFeedback.textContent=''; return; }
-      let html = `<div><strong>${escapeHTML(q.q)}</strong></div><div style="margin-top:10px;">`;
-      q.options.forEach((opt, idx)=>{
-        html += `<div style="margin-top:6px;"><input type="radio" name="qopt" id="opt${idx}" value="${idx}"> <label for="opt${idx}">${escapeHTML(opt)}</label></div>`;
-      });
-      html += '</div>';
-      quizContainer.innerHTML = html;
-      quizFeedback.textContent = '';
-    }
-
-    quizNextBtn.addEventListener('click', ()=>{
-      const sel = document.querySelector('input[name="qopt"]:checked');
-      if(!sel){ quizFeedback.innerHTML = '<small style="color:#a33">Selecciona una opción.</small>'; return; }
-      const chosen = Number(sel.value);
-      const correct = currentQuizSet[quizIndex].a;
-      if(chosen === correct){
-        quizFeedback.innerHTML = '<small style="color:green">¡Correcto! ✅</small>';
-      } else {
-        quizFeedback.innerHTML = `<small style="color:#a33">Incorrecto. La respuesta correcta es: <strong>${escapeHTML(currentQuizSet[quizIndex].options[correct])}</strong></small>`;
-      }
-      quizIndex++;
-      if(quizIndex < currentQuizSet.length){
-        setTimeout(showQuizQuestion,900);
-      } else {
-        setTimeout(()=>{ quizContainer.innerHTML = '<p>Has terminado el quiz. ¡Bien hecho!</p>'; quizFeedback.textContent=''; },900);
-      }
-    });
-
-    /*******************************
-     * MEMORY GAME (genérico)
-     *******************************/
-    const memoryModal = new bootstrap.Modal(document.getElementById('memoryModal'));
-    const memoryBoard = document.getElementById('memoryBoard');
-    const memoryMsg = document.getElementById('memoryMsg');
-    document.getElementById('openMemory').addEventListener('click', ()=>{ setupMemory(); memoryModal.show(); });
-
-    let memCards = [], firstPick=null, secondPick=null, lock=false, matches=0;
-
-    function setupMemory(){
-      // Use pairs from current chapter if defined, else default
-      const base = chapters[current].memoryPairs && chapters[current].memoryPairs.length>0 ? chapters[current].memoryPairs : ["Alicia","Sombrerero","Conejo","Té"];
-      // create duplicates and shuffle
-      let labels = [];
-      base.forEach(l => { labels.push(l); labels.push(l); });
-      labels = labels.sort(()=>Math.random()-0.5);
-      memCards = labels.map((lab, idx)=>({id:idx,label:lab,revealed:false,matched:false}));
-      renderMemory();
-      memoryMsg.textContent = 'Encuentra todos los pares.';
-      matches = 0; firstPick = secondPick = null; lock=false;
-    }
-
-    function renderMemory(){
-      memoryBoard.innerHTML = '';
-      memoryBoard.style.gridTemplateColumns = 'repeat(4,1fr)';
-      memCards.forEach(card=>{
-        const btn = document.createElement('button');
-        btn.className = 'btn';
-        btn.style.minHeight = '80px';
-        btn.style.borderRadius = '8px';
-        btn.style.border = '1px solid rgba(0,0,0,0.06)';
-        btn.style.background = card.matched ? 'linear-gradient(90deg,var(--sand),var(--terra))' : '#fff';
-        btn.style.color = card.matched ? '#fff' : '#3b2f2b';
-        btn.dataset.id = card.id;
-        btn.innerHTML = card.revealed || card.matched ? `<strong>${escapeHTML(card.label)}</strong>` : `<i class="fa-solid fa-question"></i>`;
-        btn.onclick = () => handleMemoryClick(card.id);
-        memoryBoard.appendChild(btn);
-      });
-    }
-
-    function handleMemoryClick(id){
-      if(lock) return;
-      const card = memCards.find(c=>c.id===id);
-      if(card.matched || card.revealed) return;
-      card.revealed = true;
-      if(!firstPick){ firstPick = card; renderMemory(); return; }
-      secondPick = card; renderMemory(); lock = true;
-      setTimeout(()=>{
-        if(firstPick.label === secondPick.label){
-          firstPick.matched = true; secondPick.matched = true; matches++;
-          memoryMsg.textContent = `¡Acertaste! Pares encontrados: ${matches}`;
-        } else {
-          firstPick.revealed = false; secondPick.revealed = false;
-          memoryMsg.textContent = 'Inténtalo de nuevo.';
-        }
-        firstPick = secondPick = null; lock=false; renderMemory();
-        if(matches === memCards.length/2) memoryMsg.textContent = 'Has encontrado todos los pares. ¡Felicidades!';
-      },700);
-    }
-
-    document.getElementById('resetMemory').addEventListener('click', ()=>{ setupMemory(); });
-
-    /*******************************
-     * Leer en voz alta (SpeechSynthesis)
-     *******************************/
-    document.getElementById('readAloud').addEventListener('click', ()=>{
-      const text = chapters[current].text.replace(/\\[.*?\\]/g,''); // quitar marcadores
-      if(!('speechSynthesis' in window)){ alert('Tu navegador no soporta lectura en voz alta.'); return; }
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'en-US'; // el texto fuente está en inglés; cambia si pegas español
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(u);
-    });
-
-    /*******************************
-     * Ayuda: insertar capítulos completos
-     *******************************/
-    // Si quieres que inserte capítulos 4..12 completos en este mismo archivo,
-    // dime "inserta todo" y lo hago (archivo resultante será mucho más grande).
-  </script>
 </body>
 </html>
